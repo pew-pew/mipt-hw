@@ -3,6 +3,8 @@
 #include <algorithm>
 
 
+// https://github.com/pew-pew/mipt-hw/tree/master/deque
+
 template <typename T>
 class Deque {
 private:
@@ -58,9 +60,7 @@ private:
         if (buf_back.empty()) {
             const size_t pop_size = buf_front.size() - buf_front.size() / 2;
             buf_back.resize(pop_size);
-            std::move(buf_front.crend() - pop_size,
-                      buf_front.crend(),
-                      buf_back.begin());
+            std::move(buf_front.crend() - pop_size, buf_front.crend(), buf_back.begin());
             buf_front = Vector(buf_front.begin() + pop_size, buf_front.end());
         }
         buf_back.pop_back();
