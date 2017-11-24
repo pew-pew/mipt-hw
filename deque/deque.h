@@ -111,14 +111,14 @@ private:
         DequeIteratorT& operator+=(diff_type diff) { index += diff; return *this;}
         DequeIteratorT& operator-=(diff_type diff) { index -= diff; return *this;}
         
-        DequeIteratorT operator+(diff_type diff) {return DequeIteratorT(*this) += diff;}
-        DequeIteratorT operator-(diff_type diff) {return DequeIteratorT(*this) -= diff;}
+        DequeIteratorT operator+(diff_type diff) const {return DequeIteratorT(*this) += diff;}
+        DequeIteratorT operator-(diff_type diff) const {return DequeIteratorT(*this) -= diff;}
         
         friend DequeIteratorT operator+(diff_type diff, const DequeIteratorT& it) {
             return it + diff;
         }
 
-        diff_type operator-(const DequeIteratorT &other) {
+        diff_type operator-(const DequeIteratorT &other) const {
             return static_cast<diff_type>(index) - static_cast<diff_type>(other.index);
         }
     };
