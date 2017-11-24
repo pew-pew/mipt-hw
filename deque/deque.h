@@ -1,9 +1,9 @@
+// https://github.com/pew-pew/mipt-hw/tree/master/deque
+
 #include <vector>
 #include <cassert>
 #include <algorithm>
 
-
-// https://github.com/pew-pew/mipt-hw/tree/master/deque
 
 template <typename T>
 class Deque {
