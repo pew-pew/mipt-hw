@@ -1,8 +1,12 @@
 #include <iostream>
-#include <gtest/gtest.h>
 #include <string>
 #include <deque>
 #include <cstdlib>
+#include <chrono>
+#include <vector>
+#include <algorithm>
+
+#include <gtest/gtest.h>
 
 #include "deque.h"
 
@@ -67,8 +71,7 @@ void applyRandomOp(Deque<T> &d1, std::deque<T> &d2, T valToPush) {
     }
 }
 
-
-TEST(testCaseName, testName) {
+TEST(DequeTest, PushPop) {
     Deque<int> deque;
     std::deque<int> ref;
 
@@ -86,7 +89,61 @@ TEST(testCaseName, testName) {
     }
 }
 
-// TODO: TIME MEASUREMENT TEST
+using std::chrono::steady_clock;
+using std::chrono::duration_cast;
+using std::chrono::nanoseconds;
+using std::chrono::milliseconds;
+
+TEST(DequeTest, TimeComplexity) {
+    const int minMs = 200;
+    const int maxMs = 3000;
+    const size_t minCount = 10;
+    const double errorThres = 0.05;
+
+    std::vector<double> constants;
+    for (int count = 1e2; count < 1e9; count *= 1.05) {
+        Deque<int> d;
+        auto start = steady_clock::now();
+
+        for (int i = 0; i < count; i++) {
+            if (!d.empty() && rand() % 3 == 0)
+                d.pop_front();
+            else
+                d.push_back(i);
+        }
+
+        auto finish = steady_clock::now();
+        auto elapsedNs = duration_cast<nanoseconds>(finish - start);
+        if (elapsedNs < milliseconds{minMs})
+            continue;
+
+        // TODO: find a better way to output results
+        //std::cerr << count << " " << elapsedNs.count() << std::endl;
+
+        constants.push_back(elapsedNs.count() / count);
+
+        if (elapsedNs > milliseconds{maxMs})
+            break;
+    }
+
+    if (constants.size() <= minCount) {
+        FAIL() << "Not enough time measurements - less than " << minCount
+               << " in [" << minMs << "ms, " << maxMs << "ms] interval";
+        return;
+    }
+
+    double midC = 0;
+    for (double c : constants) midC += c;
+    midC /= constants.size();
+
+    for (double c : constants) {
+        double relError = std::abs(c - midC) / std::abs((c + midC) / 2);
+        if (relError > errorThres) {
+            FAIL() << "constant's relative error ( = " << relError << ") should be <= " << errorThres;
+            return;
+        }
+    }
+}
 
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
