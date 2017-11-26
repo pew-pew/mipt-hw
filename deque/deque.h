@@ -15,8 +15,7 @@ private:
     public:
         using Base::Base;
 
-        void pop_back() {
-            Base::pop_back();
+        void tryShrink() {
             if (Base::size() * 4 < Base::capacity())
                 Base::shrink_to_fit();
         }
@@ -47,8 +46,11 @@ public:
     bool empty() const {return buffer_front_.empty() && buffer_back_.empty();};
     size_t size() const {return buffer_front_.size() + buffer_back_.size();};
 
-    void push_back(const T& val) {buffer_back_.push_back(val);}
+    void push_back(const T& val){buffer_back_.push_back(val);}
     void push_front(const T& val) {buffer_front_.push_back(val);}
+    
+    void push_back(T&& val) {buffer_back_.push_back(std::move(val));}
+    void push_front(T&& val) {buffer_front_.push_back(std::move(val));}
     
 private:
     template <Vector Deque::*BUF_FRONT, Vector Deque::*BUF_BACK>
@@ -59,11 +61,14 @@ private:
 
         if (buf_back.empty()) {
             const size_t pop_size = buf_front.size() - buf_front.size() / 2;
-            buf_back.resize(pop_size);
-            std::move(buf_front.crend() - pop_size, buf_front.crend(), buf_back.begin());
-            buf_front = Vector(buf_front.begin() + pop_size, buf_front.end());
+            buf_back.reserve(pop_size);
+            std::move(buf_front.rend() - pop_size, buf_front.rend(), std::back_inserter(buf_back));
+            std::move(buf_front.begin() + pop_size, buf_front.end(), buf_front.begin());
+            buf_front.resize(buf_front.size() - pop_size);
+            buf_front.tryShrink();
         }
         buf_back.pop_back();
+        buf_back.tryShrink();
     }
 
 public:
