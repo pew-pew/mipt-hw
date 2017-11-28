@@ -15,6 +15,6 @@ def plotTimes(data, **kwargs):
     plt.plot(ns, ts, **kwargs)
     plt.scatter(ns, ts, **kwargs)
 
-plotTimes(readTimes("times123.txt"))
+plotTimes(readTimes("times.txt"))
 plt.savefig("plot.png")
 plt.show()
