@@ -94,6 +94,10 @@ private:
     public:
         DequeIteratorT(): p_deque(NULL), index(0) {}
 
+        operator DequeIteratorT<const DequeT, const ValT>() const {
+            return DequeIteratorT<const DequeT, const ValT>(p_deque, index);
+        }
+
         ValT& operator[](diff_type i) {
             assert(p_deque != NULL);
             return (*p_deque)[index + i];
