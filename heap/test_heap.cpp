@@ -9,6 +9,7 @@
 #include "stupid_heap.h"
 #include "binomial_heap.h"
 #include "leftist_heap.h"
+#include "skew_heap.h"
 
 
 template <typename T, typename HeapT>
@@ -114,7 +115,11 @@ TEST(Heap, BinomialHeap) {
 }
 
 TEST(Heap, LeftistHeap) {
-    TestCompareHeaps<StupidHeap<int>, LeftistHeap<int>>(1000);
+    TestCompareHeaps<StupidHeap<int>, LeftistHeap<int>>(10000);
+}
+
+TEST(Heap, SwekHeap) {
+    TestCompareHeaps<StupidHeap<int>, LeftistHeap<int>>(10000);
 }
 
 
