@@ -8,7 +8,7 @@
 #include "heap.h"
 #include "stupid_heap.h"
 #include "binomial_heap.h"
-//#include "leftist_heap.h"
+#include "leftist_heap.h"
 
 
 template <typename T, typename HeapT>
@@ -97,7 +97,7 @@ void TestCompareHeaps(size_t iterations) {
             int m2 = heapsB.getMin(index1);
             ASSERT_EQ(m1, m2);
         } else if (op == EXTRACT) {
-            //std::cout << "EX " << index1 std::endl;
+            //std::cout << "EX " << index1 << std::endl;
             heapsA.extractMin(index1);
             heapsB.extractMin(index1);
         } else {
@@ -113,9 +113,9 @@ TEST(Heap, BinomialHeap) {
     TestCompareHeaps<StupidHeap<int>, BinomialHeap<int>>(10000);
 }
 
-//TEST(Heap, LeftistHeap) {
-//    TestCompareHeaps<StupidHeap<int>, LeftistHeap<int>>(1000);
-//}
+TEST(Heap, LeftistHeap) {
+    TestCompareHeaps<StupidHeap<int>, LeftistHeap<int>>(1000);
+}
 
 
 int main(int argc, char **argv) {
