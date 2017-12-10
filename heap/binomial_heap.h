@@ -44,7 +44,7 @@ private:
         return true;
     }
 
-    BinomialHeap(TreeList &&trees): trees(trees) {}
+    BinomialHeap(TreeList &&trees): trees(std::move(trees)) {}
 
 public:
     BinomialHeap(): trees() {}
@@ -85,7 +85,7 @@ public:
     }
 
     virtual void meld(IHeap<T> &&other) override {
-        meld(dynamic_cast<BinomialHeap&&>(other));
+        meld(dynamic_cast<BinomialHeap&&>(std::move(other)));
     }
 
     virtual void insert(T key) override {

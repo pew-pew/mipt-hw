@@ -56,7 +56,7 @@ public:
     }
 
     virtual void meld(IHeap<T> &&other) override {
-        meld(dynamic_cast<SkewHeap&&>(other));
+        meld(dynamic_cast<SkewHeap&&>(std::move(other)));
     }
 
     void meld(SkewHeap &&other) {

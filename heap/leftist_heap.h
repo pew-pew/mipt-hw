@@ -63,7 +63,7 @@ public:
     }
 
     virtual void meld(IHeap<T> &&other) override {
-        meld(dynamic_cast<LeftistHeap&&>(other));
+        meld(dynamic_cast<LeftistHeap&&>(std::move(other)));
     }
 
     void meld(LeftistHeap &&other) {
