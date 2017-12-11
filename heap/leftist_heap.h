@@ -52,7 +52,7 @@ public:
 
     LeftistHeap(): root(nullptr) {}
 
-    ~LeftistHeap() {
+    virtual ~LeftistHeap() {
         deleteTree(root);
         root = nullptr;
     }
@@ -63,7 +63,7 @@ public:
     }
 
     virtual void meld(IHeap<T> &&other) override {
-        meld(dynamic_cast<LeftistHeap&&>(std::move(other)));
+        meld(std::move(dynamic_cast<LeftistHeap&>(other)));
     }
 
     void meld(LeftistHeap &&other) {

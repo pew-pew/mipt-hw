@@ -85,7 +85,7 @@ public:
     }
 
     virtual void meld(IHeap<T> &&other) override {
-        meld(dynamic_cast<BinomialHeap&&>(std::move(other)));
+        meld(std::move(dynamic_cast<BinomialHeap&>(other)));
     }
 
     virtual void insert(T key) override {

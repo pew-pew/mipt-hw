@@ -119,7 +119,7 @@ TEST(Heap, LeftistHeap) {
 }
 
 TEST(Heap, SwekHeap) {
-    TestCompareHeaps<StupidHeap<int>, LeftistHeap<int>>(10000);
+    TestCompareHeaps<StupidHeap<int>, SkewHeap<int>>(10000);
 }
 
 

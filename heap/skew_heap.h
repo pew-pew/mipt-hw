@@ -45,7 +45,7 @@ public:
 
     SkewHeap(): root(nullptr) {}
 
-    ~SkewHeap() {
+    virtual ~SkewHeap() {
         deleteTree(root);
         root = nullptr;
     }
@@ -56,7 +56,7 @@ public:
     }
 
     virtual void meld(IHeap<T> &&other) override {
-        meld(dynamic_cast<SkewHeap&&>(std::move(other)));
+        meld(std::move(dynamic_cast<SkewHeap&>(other)));
     }
 
     void meld(SkewHeap &&other) {
